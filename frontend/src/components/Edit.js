@@ -27,6 +27,10 @@ const Edit = () => {
     const [addresses, setAddresses] = useState([]);
     const [newAddress, setNewAddress] = useState("");
     const [defaultAddress, setDefaultAddress] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentEditIndex, setCurrentEditIndex] = useState(null);
+    const [editAddress, setEditAddress] = useState("");
+
 
     useEffect(() => {
         if (id) {
@@ -80,7 +84,7 @@ const Edit = () => {
 
         if (id) {
             const response = await axios.put(`http://localhost:8000/users/${id}`, data);
-            toast.success("Saved Successfully" , toastOptions);
+            toast.success("Saved Successfully", toastOptions);
             setTimeout(() => {
                 navigate(`/profile/${id}`);
             }, 2000);
@@ -91,6 +95,27 @@ const Edit = () => {
         if (newAddress.trim()) {
             setAddresses([...addresses, newAddress.trim()]);
             setNewAddress("");
+        }
+    };
+
+    const openEditModal = (index) => {
+        setEditAddress(addresses[index]);
+        setCurrentEditIndex(index);
+        setIsModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsModalOpen(false);
+        setEditAddress("");
+        setCurrentEditIndex(null);
+    };
+
+    const handleSaveEdit = () => {
+        if (editAddress.trim()) {
+            const updatedAddresses = [...addresses];
+            updatedAddresses[currentEditIndex] = editAddress.trim();
+            setAddresses(updatedAddresses);
+            closeEditModal();
         }
     };
 
@@ -190,25 +215,38 @@ const Edit = () => {
                     </div>
 
                     <div className="mb-4">
-                        <label className="text-xl">Existing Addresses</label>
+                        <div className=" flex space-x-80 mb-4">
+                            <label className="text-xl font-bold">Existing Addresses</label>
+                            <label className="text-xl font-bold">Select Default</label>
+                        </div>
+
                         <ul>
                             {addresses.map((address, index) => (
                                 <li key={index} className="flex justify-between items-center">
-                                    <span className="mb-2 w-full">{index + 1}. {address}</span>
-                                    <div>
+                                    <span className="mb-4 w-full">{index + 1}. {address}</span>
+                                    <div className=" flex ">
                                         <input
                                             type="radio"
                                             checked={defaultAddress === address}
                                             onChange={() => setDefaultAddress(address)}
                                         />
-                                        <label className="ml-2">Default</label>
-                                        <button
-                                            type="button"
-                                            onClick={() => handleDeleteAddress(index)}
-                                            className="bg-red-500 hover:bg-red-700 text-white ml-2 mb-2 font-bold py-1 px-3 rounded-full"
-                                        >
-                                            Delete
-                                        </button>
+
+                                        <div className=" flex ">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDeleteAddress(index)}
+                                                className="bg-red-500 hover:bg-red-700 text-white ml-2 mb-2 font-bold py-1 px-3 rounded-full"
+                                            >
+                                                Delete
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => openEditModal(index)}
+                                                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold mb-2 px-6 rounded-full ml-2"
+                                            >
+                                                Edit
+                                            </button>
+                                        </div>
                                     </div>
 
                                 </li>
@@ -228,7 +266,36 @@ const Edit = () => {
                 </div>
             </form>
 
-            <ToastContainer/>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white rounded-lg p-6">
+                        <h2 className="text-xl font-bold mb-4">Edit Address</h2>
+                        <textarea
+                            className="h-20 w-full resize-none rounded border border-gray-300 bg-white py-1 px-3 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                            type="text"
+                            value={editAddress}
+                            onChange={(e) => setEditAddress(e.target.value)}
+                        />
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                className="bg-blue-500 text-white font-bold py-1 px-4 rounded"
+                                onClick={handleSaveEdit}
+                            >
+                                Save
+                            </button>
+                            <button
+                                className="bg-gray-400 text-white font-bold py-1 px-4 rounded"
+                                onClick={closeEditModal}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <ToastContainer />
         </div>
     );
 };
