@@ -33,6 +33,10 @@ const Home = () => {
         setShowModal(true); 
     };
 
+    const handleProfileClick = (id) =>{
+        navigate(`/profile/${id}`);
+    }
+
     const handleEdit = (id) => {
         navigate(`/edit/${id}`);
     };
@@ -47,8 +51,7 @@ const Home = () => {
                     <tr>
                         <th className="border border-gray-300 px-4 py-2">Name</th>
                         <th className="border border-gray-300 px-4 py-2">Phone</th>
-                        <th className="border border-gray-300 px-4 py-2">Age</th>
-                        <th className="border border-gray-300 px-4 py-2">Email</th>
+
                         <th className="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -60,8 +63,7 @@ const Home = () => {
                         >
                             <td className="border border-gray-300 px-4 py-2">{user.name}</td>
                             <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
-                            <td className="border border-gray-300 px-4 py-2">{user.age}</td>
-                            <td className="border border-gray-300 px-4 py-2">{user.email}</td>
+                            
                             <td className="border border-gray-300 px-4 py-2">
                                 <div className="flex justify-center">
                                     <div className="mr-2 my-2">
@@ -69,6 +71,9 @@ const Home = () => {
                                     </div>
                                     <div className="my-2">
                                         <button className="rounded-md bg-red-600 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-red-700 focus:shadow-none active:bg-red-700 hover:bg-red-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleDeleteClick(user._id)}>Delete</button>
+                                    </div>
+                                    <div className="my-2">
+                                        <button className="rounded-md bg-green-600 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleProfileClick(user._id)}>Show Profile</button>
                                     </div>
                                 </div>
                             </td>

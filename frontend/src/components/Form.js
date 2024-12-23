@@ -13,19 +13,20 @@ const From = () => {
         draggable: true,
         theme: "dark",
     }
-    
+
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [age, setAge] = useState(null);
     const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!/^\d{10}$/.test(phone)) {
-            toast.error('Enter valid phone number' , toastOptions);
+            toast.error('Enter valid phone number', toastOptions);
             return;
         }
 
@@ -33,7 +34,7 @@ const From = () => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            toast.error("Enter Valid Email Address" , toastOptions)
+            toast.error("Enter Valid Email Address", toastOptions)
             return;
         }
 
@@ -43,6 +44,7 @@ const From = () => {
             phone,
             age,
             email,
+            addresses : [address]
         };
 
         try {
@@ -50,13 +52,10 @@ const From = () => {
 
             if (response.data.status === 'ok') {
                 toast.success('User details saved:', toastOptions);
-                setName('');
-                setPhone('');
-                setAge(null);
-                setEmail('');
+
                 setTimeout(() => {
-                    navigate('/'); 
-                }, 2000); 
+                    navigate('/');
+                }, 2000);
             } else {
                 console.log('Error saving user details');
             }
@@ -125,14 +124,28 @@ const From = () => {
 
                     </div>
 
+                    <div className='mb-4'>
+                        <div>
+                            <label className='text-xl'>Enter Address</label>
+                        </div>
+                        <div>
+                            <textarea
+                                className="h-20 w-full resize-none rounded border border-gray-300 bg-white py-1 px-3 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                                placeholder="Enter Address"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
                     <div className='flex justify-center'>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="submit">Submit</button>
                     </div>
                 </div>
-                
+
             </form>
 
-            <ToastContainer/>
+            <ToastContainer />
         </>
     );
 }

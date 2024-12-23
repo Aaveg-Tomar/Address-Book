@@ -35,6 +35,19 @@ export class UserService{
         return { message: `User with ID ${id} deleted successfully.` };
     }
        
+    async addAddress(id : string , newAddress : string):Promise<UserApp>{
+        const updatedUser = await this.userModel.findByIdAndUpdate(
+            id,
+            { $push: { addresses: newAddress } }, 
+            { new: true } 
+        );
+
+        return updatedUser;
+
+    }
+
+
+    
 
     
 }
