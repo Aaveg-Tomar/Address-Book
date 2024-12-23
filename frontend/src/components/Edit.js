@@ -80,10 +80,10 @@ const Edit = () => {
 
         if (id) {
             const response = await axios.put(`http://localhost:8000/users/${id}`, data);
-            if (response.data.status === "ok") {
-                alert("User updated successfully");
-            }
-            navigate("/");
+            toast.success("Saved Successfully" , toastOptions);
+            setTimeout(() => {
+                navigate(`/profile/${id}`);
+            }, 2000);
         }
     };
 
