@@ -49,8 +49,14 @@ const From = () => {
             const response = await axios.post('http://localhost:8000/users', data);
 
             if (response.data.status === 'ok') {
-                console.log('User details saved:', response.data.user);
-                navigate('/')
+                toast.success('User details saved:', toastOptions);
+                setName('');
+                setPhone('');
+                setAge(null);
+                setEmail('');
+                setTimeout(() => {
+                    navigate('/'); 
+                }, 2000); 
             } else {
                 console.log('Error saving user details');
             }
