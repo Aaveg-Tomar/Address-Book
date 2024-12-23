@@ -1,8 +1,19 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const From = () => {
+
+    const toastOptions = {
+        position: "bottom-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+    }
+    
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
@@ -14,16 +25,16 @@ const From = () => {
         e.preventDefault();
 
         if (!/^\d{10}$/.test(phone)) {
-            alert('Enter valid phone number');
-            return;  
+            toast.error('Enter valid phone number' , toastOptions);
+            return;
         }
 
 
-      
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert("Enter Valid Email Address")
-            return;  
+            toast.error("Enter Valid Email Address" , toastOptions)
+            return;
         }
 
 
@@ -112,7 +123,10 @@ const From = () => {
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="submit">Submit</button>
                     </div>
                 </div>
+                
             </form>
+
+            <ToastContainer/>
         </>
     );
 }

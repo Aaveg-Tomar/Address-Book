@@ -20,6 +20,9 @@ export class UserApp{
 
     @Prop()
     email : string;
+
+    @Prop()
+    addresses: string[];
   
 }
 

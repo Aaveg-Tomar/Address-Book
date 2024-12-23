@@ -3,4 +3,5 @@ export class CreateUserAppDTO{
     phone : number;
     age : number;
     email : string
+    addresses : string[];
 }
