@@ -2,6 +2,7 @@ export class CreateUserAppDTO{
     name : string;
     phone : number;
     age : number;
-    email : string
+    email : string;
+    password : string;
     addresses : string[];
 }

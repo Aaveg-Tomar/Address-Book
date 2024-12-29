@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-
-
-
-const Edit = () => {
-
+const ManagerEdit = () => {
     const toastOptions = {
         position: "bottom-right",
         autoClose: 8000,
@@ -86,7 +80,7 @@ const Edit = () => {
             const response = await axios.put(`http://localhost:8000/users/${id}`, data);
             toast.success("Saved Successfully", toastOptions);
             setTimeout(() => {
-                navigate(`/profile/${id}`);
+                navigate(`/manager`);
             }, 2000);
         }
     };
@@ -300,4 +294,4 @@ const Edit = () => {
     );
 };
 
-export default Edit;
+export default ManagerEdit

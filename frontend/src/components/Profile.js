@@ -25,7 +25,7 @@ const Profile = () => {
     };
 
     const handleHome = () => {
-        navigate('/');
+        navigate('/home');
     };
 
     if (!userDetails) {

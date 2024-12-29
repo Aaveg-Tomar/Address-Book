@@ -22,7 +22,13 @@ export class UserApp{
     email : string;
 
     @Prop()
+    password : string;
+
+    @Prop()
     addresses: string[];
+
+    @Prop()
+    token: string;
   
 }
 
