@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-const Login = () => {
+const ManagerLogin = () => {
 
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const Login = () => {
     try {
 
       
-      const response = await axios.post('http://localhost:8000/auth/login/admin', {
+      const response = await axios.post('http://localhost:8000/auth/login/manager', {
         email: formData.email,
         password: formData.password,
       } , {withCredentials: true});
@@ -39,7 +39,7 @@ const Login = () => {
 
         localStorage.setItem('managerToken', token);
 
-        navigate('/home')
+        navigate('/manager')
        
       }
     } catch (err) {
@@ -80,4 +80,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ManagerLogin;

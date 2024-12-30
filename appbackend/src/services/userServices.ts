@@ -9,6 +9,15 @@ export class UserService{
     constructor(@InjectModel(UserApp.name) private userModel: Model<UserApp>) {}
 
 
+    async validateToken(userId: string, token: string): Promise<boolean> {
+        const user = await this.userModel.findById(userId); 
+        if (!user || user.token !== token) {
+          return false; 
+        }
+        return true; 
+      }
+
+
     createUser(createUserAppdto : CreateUserAppDTO):Promise<UserApp> {
         const createdUser = new this.userModel(createUserAppdto);
         return createdUser.save();

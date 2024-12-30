@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-const Login = () => {
+const ManagerSignUp = () => {
 
   const navigate = useNavigate();
 
@@ -12,6 +12,7 @@ const Login = () => {
     password: '',
   });
 
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,23 +25,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     try {
 
-      
-      const response = await axios.post('http://localhost:8000/auth/login/admin', {
+      const response = await axios.post('http://localhost:8000/auth/signup/manager', {
         email: formData.email,
         password: formData.password,
-      } , {withCredentials: true});
+        role: 'manager',
+      });
 
-      if (response.data) {
-       
-        const  token  = response.data;
+      if (response.status === 201) {
+        navigate('/manager/login')
 
-        localStorage.setItem('managerToken', token);
-
-        navigate('/home')
-       
       }
     } catch (err) {
       console.log("Error")
@@ -48,8 +43,8 @@ const Login = () => {
   };
 
   return (
-    <div className="manager-login">
-      <h1>Manager Login</h1>
+    <div className="manager-signup">
+      <h1>Manager Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -73,11 +68,10 @@ const Login = () => {
             required
           />
         </div>
-        
-        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default ManagerSignUp;

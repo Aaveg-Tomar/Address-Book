@@ -29,6 +29,10 @@ export class UserApp{
 
     @Prop()
     token: string;
+
+    @Prop()
+    role: string;
+
   
 }
 

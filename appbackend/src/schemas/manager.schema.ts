@@ -17,6 +17,10 @@ export class ManagerApp{
 
     @Prop()
     token: string;
+
+    @Prop()
+    role: string;
+
   
 }
 

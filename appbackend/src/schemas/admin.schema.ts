@@ -17,6 +17,10 @@ export class AdminApp{
 
     @Prop()
     token: string;
+
+    @Prop()
+    role: string;
+
   
 }
 

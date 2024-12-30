@@ -1,19 +1,48 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
+import { CreateUserAppDTO } from './services/create-userapp.dto';
+import { CreateManagerAppDTO } from './services/create-managerapp.dto';
+import { CreateAdminAppDTO } from './services/create-adminapp.dto';
 
-@Controller('/auth')
+
+
+@Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
-    @Post('signup')
-    @HttpCode(HttpStatus.CREATED)
-    async signup(@Body() body: { email: string; password: string }) {
-        return this.authService.signup(body.email, body.password);
-    }
+  // Admin Signup
+  @Post('signup/admin')
+  async signupAdmin(@Body() createAdminDto: CreateAdminAppDTO) {
+    return this.authService.signupAdmin(createAdminDto);
+  }
 
-    @Post('signin')
-    @HttpCode(HttpStatus.OK)
-    async signin(@Body() body: { email: string; password: string }) {
-        return this.authService.signin(body.email, body.password);
-    }
+  // Manager Signup
+  @Post('signup/manager')
+  async signupManager(@Body() createManagerDto: CreateManagerAppDTO) {
+    return this.authService.signupManager(createManagerDto);
+  }
+
+  // User Signup
+  @Post('signup/user')
+  async signupUser(@Body() createUserDto: CreateUserAppDTO) {
+    return this.authService.signupUser(createUserDto);
+  }
+
+  // Admin Login
+  @Post('login/admin')
+  async loginAdmin(@Body() body: { email: string; password: string }) {
+    return this.authService.loginAdmin(body.email, body.password);
+  }
+
+  // Manager Login
+  @Post('login/manager')
+  async loginManager(@Body() body: { email: string; password: string }) {
+    return this.authService.loginManager(body.email, body.password);
+  }
+
+  // User Login
+  @Post('login/user')
+  async loginUser(@Body() body: { email: string; password: string }) {
+    return this.authService.loginUser(body.email, body.password);
+  }
 }

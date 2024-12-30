@@ -5,4 +5,6 @@ export class CreateUserAppDTO{
     email : string;
     password : string;
     addresses : string[];
+    token : string;
+    role : string
 }
