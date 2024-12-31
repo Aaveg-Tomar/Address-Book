@@ -8,9 +8,16 @@ const Home = () => {
     const [userIdToDelete, setUserIdToDelete] = useState(null);
     const navigate = useNavigate();
 
+    const token = localStorage.getItem("adminToken");
+
     useEffect(() => {
         const fetchUserDetails = async () => {
-            const response = await axios.get("http://localhost:8000/users");
+           
+            const response = await axios.get("http://localhost:8000/users" , {
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                },
+            });
             setUserDetails(response.data);
         };
 
@@ -18,8 +25,13 @@ const Home = () => {
     }, []);
 
     const handleDelete = async () => {
+
         if (userIdToDelete) {
-            const response = await axios.delete(`http://localhost:8000/users/${userIdToDelete}`);
+            const response = await axios.delete(`http://localhost:8000/users/${userIdToDelete}` , {
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                },
+            });
             if (response.status === 200) {
                
                 setUserDetails(userDetails.filter((user) => user._id !== userIdToDelete));

@@ -4,9 +4,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
-
 const Edit = () => {
 
     const toastOptions = {
@@ -31,11 +28,18 @@ const Edit = () => {
     const [currentEditIndex, setCurrentEditIndex] = useState(null);
     const [editAddress, setEditAddress] = useState("");
 
+    const token = localStorage.getItem("adminToken");
+
 
     useEffect(() => {
+
         if (id) {
             const fetchUserDetails = async () => {
-                const response = await axios.get(`http://localhost:8000/users/user/${id}`);
+                const response = await axios.get(`http://localhost:8000/users/user/${id}` ,  {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                });
                 const { name, phone, age, email, addresses } = response.data;
                 setName(name || "");
                 setPhone(phone || null);
@@ -83,7 +87,11 @@ const Edit = () => {
         };
 
         if (id) {
-            const response = await axios.put(`http://localhost:8000/users/${id}`, data);
+            const response = await axios.put(`http://localhost:8000/users/${id}`, data , {
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                },
+            });
             toast.success("Saved Successfully", toastOptions);
             setTimeout(() => {
                 navigate(`/profile/${id}`);

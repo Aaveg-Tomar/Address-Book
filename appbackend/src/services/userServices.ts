@@ -3,20 +3,57 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { UserApp, UserAppDocument } from "src/schemas/user.schema";
 import { CreateUserAppDTO } from "./create-userapp.dto";
+import { AdminApp } from "src/schemas/admin.schema";
+import { ManagerApp } from "src/schemas/manager.schema";
+
 
 @Injectable()
 export class UserService{
-    constructor(@InjectModel(UserApp.name) private userModel: Model<UserApp>) {}
+    constructor(@InjectModel(UserApp.name) private userModel: Model<UserApp>,
+    @InjectModel(AdminApp.name) private adminModel: Model<AdminApp>,
+    @InjectModel(ManagerApp.name) private managerModel: Model<ManagerApp>,) {}
+
+
+    async getUserIdByEmail(email: string): Promise<string | null> {
+      let user = await this.userModel.findOne({ email });
+    
+      if (!user) {
+        user = await this.managerModel.findOne({ email });
+        if (!user) {
+          user = await this.adminModel.findOne({ email });
+        }
+      }
+    
+      if (!user) {
+        return null; // User not found
+      }
+    
+      return user.id; // Return the userId
+    }
+    
 
 
     async validateToken(userId: string, token: string): Promise<boolean> {
-        const user = await this.userModel.findById(userId); 
-        if (!user || user.token !== token) {
-          return false; 
+      let user = await this.userModel.findById(userId);
+    
+      if (!user) {
+        user = await this.managerModel.findById(userId);
+        if (!user) {
+          user = await this.adminModel.findById(userId);
         }
-        return true; 
       }
-
+    
+      if (!user) {
+        return false; // User not found
+      }
+    
+      if (user.token !== token) {
+        return false; // Token mismatch
+      }
+    
+      return true; // Token is valid
+    }
+    
 
     createUser(createUserAppdto : CreateUserAppDTO):Promise<UserApp> {
         const createdUser = new this.userModel(createUserAppdto);

@@ -6,12 +6,19 @@ const Profile = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const token = localStorage.getItem("adminToken");
+    
+
     const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {
         if (id) {
             const fetchUserDetails = async () => {
-                const response = await axios.get(`http://localhost:8000/users/user/${id}`);
+                const response = await axios.get(`http://localhost:8000/users/user/${id}` , {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                });
                 setUserDetails(response.data);
                 console.log(response);
             };

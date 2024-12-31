@@ -10,31 +10,45 @@ export class JwtAuthGuard implements CanActivate {
     private userService: UserService, 
   ) {}
 
-  async canActivate(
-    context: ExecutionContext,
-  ): Promise<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization?.split(' ')[1]; 
-
+    const token = request.headers.authorization?.split(' ')[1];
+  
     if (!token) {
       return false;
     }
-
+  
     try {
       const decoded = this.jwtService.verify(token, {
-        secret: 'your-secret-key', 
+        secret: 'abc',
       });
-
-      
-      const isTokenValid = await this.userService.validateToken(decoded.userId, token);
-      if (!isTokenValid) {
-        return false; 
+  
+      // Extract the email from the token
+      const email = decoded.email;
+  
+      if (!email) {
+        return false; // If email is missing in the token
       }
-
-      request.user = decoded; 
+  
+      // Find userId using email
+      const userId = await this.userService.getUserIdByEmail(email);
+  
+      if (!userId) {
+        return false; // User not found
+      }
+  
+      // Validate the token using userId
+      const isTokenValid = await this.userService.validateToken(userId, token);
+  
+      if (!isTokenValid) {
+        return false;
+      }
+  
+      request.user = { ...decoded, userId }; // Attach userId to the request
       return true;
     } catch (error) {
       return false;
     }
   }
+  
 }

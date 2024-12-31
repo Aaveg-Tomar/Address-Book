@@ -37,7 +37,7 @@ const Login = () => {
        
         const  token  = response.data;
 
-        localStorage.setItem('managerToken', token);
+        localStorage.setItem('adminToken', token);
 
         navigate('/home')
        

@@ -15,7 +15,7 @@ import { UserController } from './user.controller';
     MongooseModule.forRoot("mongodb://127.0.0.1:27017/aaveg-doc"),
     AuthModule,  
     JwtModule.register({
-      secret: 'your-secret-key', 
+      secret: 'abc', 
     }),
     MongooseModule.forFeature([
       { name: AdminApp.name, schema: AdminAppSchema }, 

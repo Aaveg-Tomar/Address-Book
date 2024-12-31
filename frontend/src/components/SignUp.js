@@ -30,7 +30,7 @@ const SignUp = () => {
       const response = await axios.post('http://localhost:8000/auth/signup/admin', {
         email: formData.email,
         password: formData.password,
-        role: 'manager',
+        role: 'admin',
       });
 
       if (response.status === 201) {
@@ -44,7 +44,7 @@ const SignUp = () => {
 
   return (
     <div className="manager-signup">
-      <h1>Manager Sign Up</h1>
+      <h1>Admin Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email:</label>

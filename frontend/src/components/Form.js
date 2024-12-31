@@ -21,6 +21,7 @@ const From = () => {
     const [age, setAge] = useState(null);
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
+    const [password , setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,7 +45,8 @@ const From = () => {
             phone,
             age,
             email,
-            addresses : [address]
+            addresses : [address],
+            password,
         };
 
         try {
@@ -119,6 +121,19 @@ const From = () => {
                                 placeholder="xx"
                                 value={age}
                                 onChange={(e) => setAge(Number(e.target.value))}
+                            />
+                        </div>
+
+                    </div>
+
+                    <div className=' mb-4'>
+                        <div><label className=' text-xl'>Enter Password</label></div>
+                        <div>
+                            <input className='w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow'
+                                type="password"
+                                placeholder="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
 

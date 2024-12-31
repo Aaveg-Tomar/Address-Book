@@ -15,7 +15,7 @@ import { UserApp, UserAppSchema } from './schemas/user.schema';
       { name: UserApp.name, schema: UserAppSchema },
     ]),
     JwtModule.register({
-      secret: 'your-secret-key', 
+      secret: 'abc', 
       
     }),
   ],
