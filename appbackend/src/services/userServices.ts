@@ -69,11 +69,26 @@ export class UserService{
         return user
     }
     
+    
 
     async updateUser(id: string, createUserAppdto: CreateUserAppDTO): Promise<UserApp> {
         return this.userModel.findByIdAndUpdate(id, createUserAppdto, { new: true }).exec();
         
     }
+
+    async getUserDetailsByEmail(email: string): Promise<UserApp> {
+      let user = await this.userModel.findOne({ email });
+    
+      if (!user) {
+        user = await this.managerModel.findOne({ email });
+        if (!user) {
+          user = await this.adminModel.findOne({ email });
+        }
+      }
+    
+      return user; 
+    }
+    
 
     
     async deleteUser(id: string): Promise<{ message: string }> {

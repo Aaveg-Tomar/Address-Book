@@ -110,17 +110,18 @@ export class AuthService {
   }
 
   // **Login for User**
-  async loginUser(email: string, password: string): Promise<string> {
+  async loginUser(email: string, password: string): Promise<{ token: string; email: string }> {
     const user = await this.userModel.findOne({ email });
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    const isValidPassword = await this.validatePassword(password, user.password);
-    if (!isValidPassword) throw new UnauthorizedException('Invalid credentials');
+    // Directly compare passwords without hashing
+    if (user.password !== password) throw new UnauthorizedException('Invalid credentials');
 
+    
     const token = this.generateToken({ email: user.email, role: 'user' });
     user.token = token;
     await user.save();
 
-    return token;
+    return { token, email: user.email };
   }
 }

@@ -35,9 +35,9 @@ const Edit = () => {
 
         if (id) {
             const fetchUserDetails = async () => {
-                const response = await axios.get(`http://localhost:8000/users/user/${id}` ,  {
+                const response = await axios.get(`http://localhost:8000/users/user/${id}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`, 
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 const { name, phone, age, email, addresses } = response.data;
@@ -87,9 +87,9 @@ const Edit = () => {
         };
 
         if (id) {
-            const response = await axios.put(`http://localhost:8000/users/${id}`, data , {
+            const response = await axios.put(`http://localhost:8000/users/${id}`, data, {
                 headers: {
-                    Authorization: `Bearer ${token}`, 
+                    Authorization: `Bearer ${token}`,
                 },
             });
             toast.success("Saved Successfully", toastOptions);
@@ -135,9 +135,17 @@ const Edit = () => {
         }
     };
 
+    const handleLogOut = () => {
+        localStorage.clear();
+        navigate('/');
+    }
+
     return (
         <div>
             <h1>Edit user id: {id}</h1>
+            <div  className=" flex justify-end mr-2">
+                <button className="rounded-md bg-blue-600 py-2 px-4 mr-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleLogOut()}>Log Out</button>
+            </div>
             <form className="mt-4 flex justify-center" onSubmit={handleSubmit}>
                 <div className="w-1/2">
                     <div className="mb-4">
@@ -288,7 +296,7 @@ const Edit = () => {
                         <div className="flex justify-end space-x-4">
                             <button
                                 className="bg-blue-500 text-white font-bold py-1 px-4 rounded"
-                                onClick={()=> handleSaveEdit()}
+                                onClick={() => handleSaveEdit()}
                             >
                                 Save
                             </button>

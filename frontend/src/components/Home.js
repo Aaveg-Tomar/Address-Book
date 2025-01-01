@@ -12,10 +12,10 @@ const Home = () => {
 
     useEffect(() => {
         const fetchUserDetails = async () => {
-           
-            const response = await axios.get("http://localhost:8000/users" , {
+
+            const response = await axios.get("http://localhost:8000/users", {
                 headers: {
-                    Authorization: `Bearer ${token}`, 
+                    Authorization: `Bearer ${token}`,
                 },
             });
             setUserDetails(response.data);
@@ -27,25 +27,25 @@ const Home = () => {
     const handleDelete = async () => {
 
         if (userIdToDelete) {
-            const response = await axios.delete(`http://localhost:8000/users/${userIdToDelete}` , {
+            const response = await axios.delete(`http://localhost:8000/users/${userIdToDelete}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`, 
+                    Authorization: `Bearer ${token}`,
                 },
             });
             if (response.status === 200) {
-               
+
                 setUserDetails(userDetails.filter((user) => user._id !== userIdToDelete));
-                setShowModal(false); 
+                setShowModal(false);
             }
         }
     };
 
     const handleDeleteClick = (id) => {
         setUserIdToDelete(id);
-        setShowModal(true); 
+        setShowModal(true);
     };
 
-    const handleProfileClick = (id) =>{
+    const handleProfileClick = (id) => {
         navigate(`/profile/${id}`);
     }
 
@@ -53,11 +53,18 @@ const Home = () => {
         navigate(`/edit/${id}`);
     };
 
+    const handleLogOut = () =>{
+        localStorage.clear();
+        navigate('/')
+    }
+
     return (
         <div className="bg-green-200 min-h-[200vh]  min-w-fit py-5">
             <h1 className="mt-3 mb-3 flex font-extrabold justify-center text-4xl">User Details</h1>
-            <button className="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => navigate("/form")}>Add User</button>
-
+            <div className=" flex flex-wrap justify-between">
+                <button className="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => navigate("/form")}>Add User</button>
+                <button className="rounded-md bg-blue-600 py-2 px-4 mr-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleLogOut()}>Log Out</button>
+            </div>
             <table className="w-full text-center mr-2 table-auto border-collapse border border-gray-400 mt-4">
                 <thead className="bg-yellow-800 text-white">
                     <tr>
@@ -75,7 +82,7 @@ const Home = () => {
                         >
                             <td className="border border-gray-300 px-4 py-2">{user.name}</td>
                             <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
-                            
+
                             <td className="border border-gray-300 px-4 py-2">
                                 <div className="flex justify-center">
                                     <div className="mr-2 my-2">
@@ -94,7 +101,7 @@ const Home = () => {
                 </tbody>
             </table>
 
-            
+
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -109,7 +116,7 @@ const Home = () => {
                             </button>
                             <button
                                 className="bg-gray-500 text-white px-4 py-2 rounded-md"
-                                onClick={() => setShowModal(false)} 
+                                onClick={() => setShowModal(false)}
                             >
                                 Cancel
                             </button>

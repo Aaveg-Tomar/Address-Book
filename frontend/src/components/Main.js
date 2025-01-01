@@ -6,13 +6,17 @@ const Main = () => {
     const navigate = useNavigate();
 
     const handleAdmin = () => {
-        navigate('/home')
+        navigate('/login')
 
     }
 
     const handleManager = () => {
-        navigate('/manager')
+        navigate('/manager/login')
 
+    }
+
+    const handleUser = () =>{
+        navigate('/user/login')
     }
 
     return (
@@ -22,6 +26,9 @@ const Main = () => {
             </div>
             <div className="my-2">
                 <button className="rounded-md bg-green-600 px-6 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleAdmin()}>Admin Login</button>
+            </div>
+            <div className="my-2">
+                <button className="rounded-md bg-yellow-600 px-6 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-yellow-700 focus:shadow-none active:bg-yellow-700 hover:bg-yellow-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleUser()}>User Login</button>
             </div>
         </div>
     )
