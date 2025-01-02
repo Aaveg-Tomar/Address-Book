@@ -13,12 +13,17 @@ const Home = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
 
-            const response = await axios.get("http://localhost:8000/users", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setUserDetails(response.data);
+            try {
+
+                const response = await axios.get("http://localhost:8000/users", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setUserDetails(response.data);
+            } catch (error) {
+                navigate('/');
+            }
         };
 
         fetchUserDetails();
@@ -53,7 +58,7 @@ const Home = () => {
         navigate(`/edit/${id}`);
     };
 
-    const handleLogOut = () =>{
+    const handleLogOut = () => {
         localStorage.clear();
         navigate('/')
     }

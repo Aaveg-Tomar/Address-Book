@@ -14,9 +14,16 @@ const Edit = () => {
         theme: "dark",
     }
 
+    const token = localStorage.getItem("adminToken");
+
+  
+
+   
+
     const navigate = useNavigate();
     const { id } = useParams();
 
+  
     const [name, setName] = useState("");
     const [phone, setPhone] = useState(null);
     const [age, setAge] = useState(null);
@@ -28,7 +35,7 @@ const Edit = () => {
     const [currentEditIndex, setCurrentEditIndex] = useState(null);
     const [editAddress, setEditAddress] = useState("");
 
-    const token = localStorage.getItem("adminToken");
+    
 
 
     useEffect(() => {

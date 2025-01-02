@@ -7,25 +7,29 @@ const Profile = () => {
     const { id } = useParams();
 
     const token = localStorage.getItem("adminToken");
-    
 
     const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {
         if (id) {
-            const fetchUserDetails = async () => {
-                const response = await axios.get(`http://localhost:8000/users/user/${id}` , {
-                    headers: {
-                        Authorization: `Bearer ${token}`, 
-                    },
-                });
-                setUserDetails(response.data);
-                console.log(response);
-            };
+            try {
+                const fetchUserDetails = async () => {
+                    const response = await axios.get(`http://localhost:8000/users/user/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setUserDetails(response.data);
+                    console.log(response);
+                };
 
-            fetchUserDetails();
+                fetchUserDetails();
+            } catch (error) {
+                navigate('/');
+
+            }
         }
-    }, [id]);
+    }, [id, token, navigate]);
 
     const handleEdit = (id) => {
         navigate(`/edit/${id}`);
@@ -81,12 +85,12 @@ const Profile = () => {
             </div>
 
             <div className=' flex justify-center'>
-            <div className="  mr-2 my-2">
-                <button className="rounded-md bg-amber-600 px-8 py-4 border border-transparent text-center text-base text-slate-800 transition-all shadow-md hover:shadow-lg focus:bg-amber-700 focus:shadow-none active:bg-amber-700 hover:bg-amber-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleEdit(userDetails._id)}>Edit</button>
-            </div>
-            <div className="  mr-2 my-2">
-                <button className="rounded-md bg-green-600 px-6 py-4 border border-transparent text-center text-base text-slate-800 transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleHome()}>Home</button>
-            </div>
+                <div className="  mr-2 my-2">
+                    <button className="rounded-md bg-amber-600 px-8 py-4 border border-transparent text-center text-base text-slate-800 transition-all shadow-md hover:shadow-lg focus:bg-amber-700 focus:shadow-none active:bg-amber-700 hover:bg-amber-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleEdit(userDetails._id)}>Edit</button>
+                </div>
+                <div className="  mr-2 my-2">
+                    <button className="rounded-md bg-green-600 px-6 py-4 border border-transparent text-center text-base text-slate-800 transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={() => handleHome()}>Home</button>
+                </div>
             </div>
         </div>
     );
