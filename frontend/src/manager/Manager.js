@@ -46,7 +46,7 @@ const Manager = () => {
     };
 
     const handleEdit = (id) => {
-        navigate(`/edit/${id}`);
+        navigate(`/manager/edit/${id}`);
     };
 
     const handleLogOut = () => {

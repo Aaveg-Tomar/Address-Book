@@ -15,15 +15,9 @@ const Edit = () => {
     }
 
     const token = localStorage.getItem("adminToken");
-
-  
-
-   
-
     const navigate = useNavigate();
     const { id } = useParams();
 
-  
     const [name, setName] = useState("");
     const [phone, setPhone] = useState(null);
     const [age, setAge] = useState(null);
@@ -34,8 +28,6 @@ const Edit = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentEditIndex, setCurrentEditIndex] = useState(null);
     const [editAddress, setEditAddress] = useState("");
-
-    
 
 
     useEffect(() => {

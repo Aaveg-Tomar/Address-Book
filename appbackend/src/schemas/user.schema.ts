@@ -14,6 +14,7 @@ export class UserApp{
 
     @Prop()
     phone : number;
+    
 
     @Prop()
     age : number;

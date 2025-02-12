@@ -11,6 +11,7 @@ import User from "./user/User";
 import ManagerLogin from "./manager/ManagerLogin";
 import ManagerSignUp from "./manager/ManagerSignUp";
 import UserLogin from "./user/UserLogin";
+import ManagerEdit from "./manager/ManagerEdit";
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" Component={Login}/>
           <Route path="/signup" Component={SignUp}/>   
           <Route path="/manager" Component={Manager}/>
+          <Route path="/manager/edit/:id" Component={ManagerEdit}/>
           <Route path="/manager/login" Component={ManagerLogin}/>
           <Route path="/manager/signup" Component={ManagerSignUp}/>
           <Route path="/user" Component={User}/>

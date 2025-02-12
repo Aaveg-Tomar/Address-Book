@@ -58,7 +58,7 @@ const ManagerLogin = () => {
       }
     } catch (err) {
       console.log("Error")
-      toast.success("Wrong Email Or Password", toastOptions)
+      toast.error("Wrong Email Or Password", toastOptions)
 
     }
   };

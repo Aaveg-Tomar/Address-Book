@@ -59,6 +59,7 @@ const From = () => {
             email,
             addresses: [address],
             password,
+            role : 'user'
         };
 
         try {

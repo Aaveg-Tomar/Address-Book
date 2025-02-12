@@ -1,8 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ManagerEdit = () => {
+
     const toastOptions = {
         position: "bottom-right",
         autoClose: 8000,
@@ -13,6 +16,8 @@ const ManagerEdit = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
+    const token = localStorage.getItem('managerToken');
+    console.log(token)
 
     const [name, setName] = useState("");
     const [phone, setPhone] = useState(null);
@@ -25,13 +30,13 @@ const ManagerEdit = () => {
     const [currentEditIndex, setCurrentEditIndex] = useState(null);
     const [editAddress, setEditAddress] = useState("");
 
-
     useEffect(() => {
+
         if (id) {
             const fetchUserDetails = async () => {
-                const response = await axios.get(`http://localhost:8000/users/user/${id}` , {
-                    headers : {
-                        Authorization : `Bearer ${token}`,
+                const response = await axios.get(`http://localhost:8000/users/user/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 const { name, phone, age, email, addresses } = response.data;
@@ -46,6 +51,8 @@ const ManagerEdit = () => {
             fetchUserDetails();
         }
     }, [id]);
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
